@@ -1,0 +1,116 @@
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-500.css";
+@import "@fontsource/inter/latin-600.css";
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --color-bg: #f5f4f0;
+  --color-surface: #fffcf7;
+  --color-elevated: #ecd8c0;
+  --color-sage: #5e866c;
+  --color-tan: #c7a28f;
+  --color-sand: #ecd8c0;
+  --color-fg: #1c2822;
+  --color-muted: #4e5b53;
+  --color-subtle: #6e675e;
+  --color-line: #e3d5c6;
+  --color-primary: #3f5c4b;
+  --color-primary-fg: #f7f6f2;
+  --color-ink: #24382e;
+  --color-ink-fg: #f7f6f2;
+
+  --radius-card: 1rem;
+}
+
+@layer base {
+  html {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-bg);
+    color: var(--color-fg);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-primary) 35%, transparent);
+    color: var(--color-fg);
+  }
+}
+
+:root {
+  --normal-bg: var(--color-elevated);
+  --normal-text: var(--color-fg);
+  --normal-border: var(--color-line);
+}
+
+@layer utilities {
+  .press {
+    transition-property: transform, opacity, background-color, border-color, color;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .press:active {
+    transform: scale(0.98);
+  }
+}
+
+.dialog-panel {
+  max-height: min(40rem, calc(100dvh - 2rem));
+  animation: dialog-in 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dialog-overlay {
+  animation: overlay-in 200ms ease-out;
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .press,
+  .dialog-panel,
+  .dialog-overlay {
+    animation: none;
+    transition: none;
+  }
+
+  .press:active {
+    transform: none;
+  }
+}
